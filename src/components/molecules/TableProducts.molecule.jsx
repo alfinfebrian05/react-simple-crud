@@ -17,7 +17,6 @@ const TableProducts = ({ productsArr }) => {
       product.slice(idx, 1);
       setProducts(product);
       localStorage.setItem("productCollection", JSON.stringify(products));
-      window.location.reload();
     }
   };
 
