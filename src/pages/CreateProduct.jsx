@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
@@ -26,9 +26,7 @@ const CreateProduct = () => {
   const [products, setProducts] = useState([]);
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
-
-  const location = useLocation();
-  const pageName = location.pathname;
+  const [uuid, setUuid] = useState("");
 
   const article = {
     title: {
@@ -56,19 +54,6 @@ const CreateProduct = () => {
     const uniqueId = `${randomString}${timeStamp}`;
     return uniqueId;
   };
-
-  // Welcome user with alert
-  useEffect(() => {
-    var alreadyShown =
-      localStorage.setItem("alreadyShown", true) ||
-      localStorage.getItem("alreadyShown");
-
-    if (pageName && alreadyShown) {
-      alert(
-        `Welcome to ${location.pathname.replace(/[/-]/g, " ").trim()} page!`
-      );
-    }
-  }, []);
 
   // automatically generate product uuid and put on formData when page loaded
   useEffect(() => {
@@ -133,9 +118,7 @@ const CreateProduct = () => {
       const product =
         JSON.parse(localStorage.getItem("productCollection")) || [];
 
-      const newProduct = { ...formData };
-
-      products.push(...product, ...products, newProduct);
+      products.push(...product, formData);
 
       localStorage.setItem("productCollection", JSON.stringify(products));
 
@@ -148,9 +131,9 @@ const CreateProduct = () => {
         productDescription: "",
         productPrice: "",
       });
-    }
 
-    event.target.reset();
+      window.location.reload();
+    }
   };
 
   return (

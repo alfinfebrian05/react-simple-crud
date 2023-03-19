@@ -1,24 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { LinkComponent } from "../atoms";
 
-const TableProducts = ({ productsArr }) => {
+const TableProducts = () => {
   const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    const loadProducts =
+      JSON.parse(localStorage.getItem("productCollection")) || [];
+    setProducts(loadProducts);
+  }, []);
+
+  console.log("loadProducts", products);
+
   const handleDeleteProduct = (idx) => {
-    const product = JSON.parse(localStorage.getItem("productCollection")) || [];
-
-    const confirmDelete = window.confirm(
-      `Are you sure want to delete product ${product[idx].productName}? This action cannot be reversed!`
-    );
-
-    if (confirmDelete) {
-      product.slice(idx, 1);
-      setProducts(product);
-    }
-
-    localStorage.setItem("productCollection", JSON.stringify(products));
+    const productUpdated = [...products];
+    productUpdated.splice(idx, 1);
+    console.log("updatedProducts", productUpdated);
+    localStorage.setItem("productCollection", JSON.stringify(productUpdated));
+    window.location.reload();
   };
 
   return (
@@ -36,7 +37,7 @@ const TableProducts = ({ productsArr }) => {
         </tr>
       </thead>
       <tbody>
-        {productsArr.map((product, idx) => {
+        {products.map((product, idx) => {
           return (
             <tr key={idx}>
               <td>{idx + 1}</td>
@@ -52,7 +53,7 @@ const TableProducts = ({ productsArr }) => {
                     linkClassName="btn btn-success"
                     linkToPage={`/product/${product.productUUID}`}
                   >
-                    Edit
+                    View
                   </LinkComponent>
                   <Button
                     className="btn btn-danger"

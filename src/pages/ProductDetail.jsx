@@ -26,8 +26,6 @@ const ProductDetail = () => {
     setProduct(filteredProduct);
   }, []);
 
-  console.log(product);
-
   return (
     <>
       <NavbarComponent />
