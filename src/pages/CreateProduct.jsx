@@ -148,9 +148,9 @@ const CreateProduct = () => {
         productDescription: "",
         productPrice: "",
       });
-
-      event.target.reset();
     }
+
+    event.target.reset();
   };
 
   return (
