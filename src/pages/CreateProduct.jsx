@@ -148,6 +148,8 @@ const CreateProduct = () => {
         productDescription: "",
         productPrice: "",
       });
+
+      event.target.reset();
     }
   };
 
