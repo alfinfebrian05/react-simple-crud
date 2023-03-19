@@ -16,8 +16,9 @@ const TableProducts = ({ productsArr }) => {
     if (confirmDelete) {
       product.slice(idx, 1);
       setProducts(product);
-      localStorage.setItem("productCollection", JSON.stringify(products));
     }
+
+    localStorage.setItem("productCollection", JSON.stringify(products));
   };
 
   return (
